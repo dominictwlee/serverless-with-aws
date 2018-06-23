@@ -10,10 +10,30 @@ provider:
 plugins:
   - serverless-offline
 
-functions:  
+functions:
+  api:
+    handler: src/api/api.handler
+    events:
+      - http: 
+          path: /api
+          method: GET
+          cors: true 
   todos:
     handler: src/api/todos.handler
-    
+    events:
+      - http: GET /api/todos
   todo:
     handler: src/api/todo.handler
-    
+    events:
+      - http:
+          path: /api/todo
+          method: GET
+          request:
+            template:
+              application/json: >
+                {
+                  "foo": "$input.params('foo')",
+                  "data": "$input.params('data')"
+                }
+          cors: true
+
