@@ -17,23 +17,19 @@ functions:
       - http: 
           path: /api
           method: GET
-          cors: true 
+          cors: true
   todos:
     handler: src/api/todos.handler
     events:
-      - http: GET /api/todos
+      - http: GET /todos
   todo:
     handler: src/api/todo.handler
     events:
       - http:
-          path: /api/todo
+          path: /todo/{id}
           method: GET
           request:
-            template:
-              application/json: >
-                {
-                  "foo": "$input.params('foo')",
-                  "data": "$input.params('data')"
-                }
+            parameters: 
+              id: true
           cors: true
 
